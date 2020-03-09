@@ -1,9 +1,10 @@
-
-
 /**
  * Required External Modules
  */
 var os = require('os');
+require('custom-env').env()
+
+
 
 var http = require('http');
 const express = require("express");
@@ -15,6 +16,11 @@ const app = express();
 const port = process.env.PORT || "3000";
 const OSPlatform = os.platform(); // 'darwin'
 const OSRelease = os.release();
+var datetime = new Date();
+var name = process.env.APP_CANDIDATE_NAME;
+var startDate = process.env.APP_CURRENT_DATE;
+var endDate = process.env.APP_TRIAL_START_DATE;
+console.log(endDate);
 /**
  *  App Configuration
  */
@@ -27,8 +33,14 @@ app.use(express.static(path.join(__dirname, "public")));
  * Routes Definitions
  */
 app.get("/", (req, res) => {
-  res.render("index", { OSPlatform: OSPlatform,
-  OSRelease: OSRelease
+  res.render("index", {
+    OSPlatform: OSPlatform,
+    OSRelease: OSRelease,
+    candidate_name: name,
+    trial_start_date: startDate,
+    current_date: endDate,
+
+
   });
 });
 
