@@ -26,6 +26,7 @@
   "dependencies": {
     "custom-env": "^2.0.1",
     "express": "^4.17.1",
+    "express-status-monitor": "^1.2.9",
     "pug": "^2.0.4"
   }
 }

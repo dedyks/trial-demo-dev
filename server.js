@@ -2,7 +2,7 @@
  * Required External Modules
  */
 var os = require('os');
-require('custom-env').env()
+require('custom-env').env('staging')
 
 
 
@@ -14,18 +14,24 @@ const path = require("path");
  */
 const app = express();
 const port = process.env.PORT || "3000";
-const OSPlatform = os.platform(); // 'darwin'
+const OSPlatform = os.platform();
+console.log(OSPlatform);
 const OSRelease = os.release();
-var datetime = new Date();
+var OSUsage = os.cpus();
 var name = process.env.APP_CANDIDATE_NAME;
+var title = process.env.APP_TITLE;
+
+
+
+
 var startDate = process.env.APP_CURRENT_DATE;
 var endDate = process.env.APP_TRIAL_START_DATE;
-console.log(endDate);
 /**
  *  App Configuration
  */
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
+app.use(require('express-status-monitor')())
 
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -34,11 +40,13 @@ app.use(express.static(path.join(__dirname, "public")));
  */
 app.get("/", (req, res) => {
   res.render("index", {
+    title: title,
     OSPlatform: OSPlatform,
     OSRelease: OSRelease,
     candidate_name: name,
     trial_start_date: startDate,
     current_date: endDate,
+    cpu_usage: OSUsage,
 
 
   });
