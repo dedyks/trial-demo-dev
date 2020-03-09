@@ -15,6 +15,8 @@ const app = express();
 const port = process.env.PORT || "3000";
 const OSPlatform = os.platform(); // 'darwin'
 const OSRelease = os.release();
+var title = process.env.APP_TITLE;
+
 /**
  *  App Configuration
  */
@@ -27,7 +29,9 @@ app.use(express.static(path.join(__dirname, "public")));
  * Routes Definitions
  */
 app.get("/", (req, res) => {
-  res.render("index", { OSPlatform: OSPlatform,
+  res.render("index", { 
+  title: title,  
+  OSPlatform: OSPlatform,
   OSRelease: OSRelease
   });
 });
