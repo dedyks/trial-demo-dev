@@ -4,6 +4,7 @@
  * Required External Modules
  */
 var os = require('os');
+require('custom-env').env('staging')
 
 var http = require('http');
 const express = require("express");
