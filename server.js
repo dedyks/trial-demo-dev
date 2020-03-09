@@ -18,6 +18,7 @@ const OSPlatform = os.platform(); // 'darwin'
 const OSRelease = os.release();
 var datetime = new Date();
 var name = process.env.APP_CANDIDATE_NAME;
+var title = process.env.APP_TITLE;
 var startDate = process.env.APP_CURRENT_DATE;
 var endDate = process.env.APP_TRIAL_START_DATE;
 console.log(endDate);
@@ -34,6 +35,7 @@ app.use(express.static(path.join(__dirname, "public")));
  */
 app.get("/", (req, res) => {
   res.render("index", {
+    title: title,
     OSPlatform: OSPlatform,
     OSRelease: OSRelease,
     candidate_name: name,
