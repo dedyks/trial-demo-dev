@@ -21,6 +21,8 @@ const OSRelease = os.release();
 var OSUsage = os.cpus();
 var name = process.env.APP_CANDIDATE_NAME;
 var title = process.env.APP_TITLE;
+var mongodbString = process.env.APP_CONNECTIONSTRING;
+
 
 
 
@@ -37,7 +39,7 @@ app.use(require('express-status-monitor')())
 // Logger
 app.use(mongooseMorgan({
   collection: 'access_logger',
-  connectionString: 'mongodb+srv://root:rootpassword@cluster0-wljl0.gcp.mongodb.net/logging?retryWrites=true&w=majority',
+  connectionString: mongodbString,
  },
  {
  
