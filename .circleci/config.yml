@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  node: circleci/node@1.0.1
+  node: circleci/node@1.1.6
   gcp-gke: circleci/gcp-gke@0.1.0
   gcr: circleci/gcp-gcr@0.0.2
 jobs:
@@ -49,7 +49,7 @@ jobs:
       - gcp-gke/rollout-image:
           deployment: circle-ci-cluster
           container: dominic-backend
-          image: gcr.io/circle-ci-demo/circle-gke:v2 # change version when updating
+          image: gcr.io/trial-demo-dev/circle-gke:v2 # change version when updating
 workflows:
   build_update_deploy:
     jobs:
