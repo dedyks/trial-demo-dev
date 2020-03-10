@@ -36,17 +36,13 @@ app.use(require('express-status-monitor')())
 
 // Logger
 app.use(mongooseMorgan({
-  collection: 'error_logger',
-  connectionString: 'mongodb://localhost:27017/logs-db',
-  user: 'root',
-  pass: 'rootpassword'
+  collection: 'access_logger',
+  connectionString: 'mongodb+srv://root:rootpassword@cluster0-wljl0.gcp.mongodb.net/logging?retryWrites=true&w=majority',
  },
  {
-  skip: function (req, res) {
-      return res.statusCode < 400;
-  }
+ 
  },
- 'dev'
+ 'combined'
 ));
 app.use(express.static(path.join(__dirname, "public")));
 
