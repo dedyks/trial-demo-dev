@@ -24,7 +24,7 @@ spec:
     image: dedyyyy/trial-demo-dev:3.0.0
     ports:
     - containerPort: 3000
-    
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -43,6 +43,6 @@ spec:
     spec:
       containers:
       - name: app
-        image: dedyyyy/trial-demo-dev:2.0.0
+        image: dedyyyy/trial-demo-dev:3.0.0
         ports:
         - containerPort: 3000
