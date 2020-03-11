@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         PROJECT_ID = 'trial-demo-dev'
-        CLUSTER_NAME = 'cluster-nodejs'
+        CLUSTER_NAME = 'nodejs-cluster'
         LOCATION = 'us-central1-a'
         CREDENTIALS_ID = '56e77238195eaecbd9c1d2abc53925d4a6240fee'
     }
