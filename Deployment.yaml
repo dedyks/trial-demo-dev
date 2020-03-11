@@ -1,5 +1,5 @@
 ---
-apiVersion: v3
+apiVersion: v1
 kind: Service
 metadata:
   name: version3-service
@@ -10,9 +10,9 @@ spec:
     targetPort: 3000
     protocol: TCP
   selector:
-    app: my-app
+    app: version3
 
-apiVersion: v3
+apiVersion: v1
 kind: Pod
 metadata:
   name: version3
@@ -26,7 +26,7 @@ spec:
     - containerPort: 3000
        
 ---
-apiVersion: v3
+apiVersion: v1
 kind: Service
 metadata:
   name: version3
@@ -38,7 +38,7 @@ spec:
     port: 3000
     targetPort: 3000
 
-apiVersion: apps/v3
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: version3-deployment
