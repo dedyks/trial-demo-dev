@@ -12,7 +12,19 @@ spec:
   selector:
     app: app
 
-
+apiVersion: v1
+kind: Pod
+metadata:
+  name: version3
+  labels:
+    name: version3
+spec:
+  containers:
+  - name: version3
+    image: dedyyyy/trial-demo-dev:3.0.0
+    ports:
+    - containerPort: 3000
+    
 apiVersion: apps/v1
 kind: Deployment
 metadata:
