@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: version3-service
+  name: app-service
 spec:
   type: LoadBalancer
   ports:
@@ -10,40 +10,27 @@ spec:
     targetPort: 3000
     protocol: TCP
   selector:
-    app: version3
+    app: app
 
-apiVersion: v1
-kind: Pod
-metadata:
-  name: version3
-  labels:
-    name: version3
-spec:
-  containers:
-  - name: version3
-    image: dedyyyy/trial-demo-dev:3.0.0
-    ports:
-    - containerPort: 3000
-       
 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: version3-deployment
+  name: app-deployment
   labels:
-    app: version3
+    app: app
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: version3
+      app: app
   template:
     metadata:
       labels:
-        app: version3
+        app: app
     spec:
       containers:
-      - name: version3
-        image: dedyyyy/trial-demo-dev:3.0.0
+      - name: app
+        image: dedyyyy/trial-demo-dev:2.0.0
         ports:
         - containerPort: 3000
