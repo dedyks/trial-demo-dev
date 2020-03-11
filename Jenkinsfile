@@ -4,7 +4,7 @@ pipeline {
         PROJECT_ID = 'trial-demo-dev'
         CLUSTER_NAME = 'nodejs-cluster'
         LOCATION = 'us-central1-a'
-        CREDENTIALS_ID = 'AIzaSyA0N6wXly3VVQn1J-DZG4ySU6yNdFIUD38'
+        CREDENTIALS_ID = 'trial-demo-dev'
 '
     }
     stages {
