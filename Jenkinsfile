@@ -5,7 +5,6 @@ pipeline {
         CLUSTER_NAME = 'nodejs-cluster'
         LOCATION = 'us-central1-a'
         CREDENTIALS_ID = 'trial-demo-dev'
-'
     }
     stages {
         stage('Deploy to GKE') {
