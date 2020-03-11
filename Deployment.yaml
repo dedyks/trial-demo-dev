@@ -1,47 +1,61 @@
-apiVersion: v1
+---
+apiVersion: v3
+kind: Service
+metadata:
+  name: version3-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 3000
+    protocol: TCP
+  selector:
+    app: my-app
+
+apiVersion: v3
 kind: Pod
 metadata:
-  name: simple-api
+  name: version3
   labels:
-    name: simple-api
+    name: version3
 spec:
   containers:
-  - name: simple-api
-    image: dedyyyy/trial-demo-dev:1.0.0
+  - name: version3
+    image: dedyyyy/trial-demo-dev:3.0.0
     ports:
     - containerPort: 3000
        
 ---
-apiVersion: v1
+apiVersion: v3
 kind: Service
 metadata:
-  name: simple-api
+  name: version3
 spec:
   selector:
-    app: simple-api
+    app: version3
   ports:
   - protocol: TCP
     port: 3000
     targetPort: 3000
 
-apiVersion: apps/v1
+apiVersion: apps/v3
 kind: Deployment
 metadata:
-  name: simple-api-deployment
+  name: version3-deployment
   labels:
-    app: simple-api
+    app: version3
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: simple-api
+      app: version3
   template:
     metadata:
       labels:
-        app: simple-api
+        app: version3
     spec:
       containers:
-      - name: simple-api
-        image: dedyyyy/trial-demo-dev:1.0.0
+      - name: version3
+        image: dedyyyy/trial-demo-dev:3.0.0
         ports:
         - containerPort: 3000
