@@ -1,4 +1,4 @@
-apiVersion: apps/v1
+apiVersion: apps/v5
 kind: Deployment
 metadata:
   name: my-app-deployment
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: my-app
-        image: gcr.io/trial-demo-dev/trial-demo-dev:3.0.0
+        image: gcr.io/trial-demo-dev/trial-demo-dev:5.0.0
         ports:
         - containerPort: 3000
        
