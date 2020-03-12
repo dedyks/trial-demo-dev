@@ -7,12 +7,22 @@ pipeline {
         CREDENTIALS_ID = 'trial-demo-dev'
         REGISTRY= 'dedyyyy/trial-demo-dev'
         DOCKER_CREDENTIAL = 'dockerhub'
+        IMAGE_VERSION =':3.0.0'
     }
     stages {
         stage('Building image') {
             steps{
                 script {
-                docker.build registry + ':3.0.0'
+                docker.build registry + env.IMAGE_VERSION
+                }
+            }
+        }
+        stage('Deploy Image') {
+            steps{    
+                script {
+                docker.withRegistry( '', env.CREDENTIALS_ID ) {
+                    dockerImage.push()
+                    }
                 }
             }
         }
