@@ -10,16 +10,26 @@ pipeline {
         REGISTRY= 'dedyyyy/trial-demo-dev'
         DOCKER_CREDENTIAL = 'dockerhub'
         IMAGE_VERSION =':3.0.0'
-    }
-    stages {
-        stage('Check image exist') {
-            steps{
-                script {
-                dockerImageExists(registry + env.IMAGE_VERSION)
-                }
-            }
-        }
+
         
+    }
+    properties(
+    [
+        parameters(
+            [string(defaultValue: 'TRUE', description: 'Build image', name: 'BUILD')
+            )
+            ]
+        )
+    ]
+    )
+    stages {
+        if (BUILD == "TRUE")
+        {
+        stage('Change deployment version') {
+            steps {
+                sh "sed '$IMAGE_VERSION' Deployment.yaml"
+            }
+        }   
         stage('Building image') {
             steps{
                 script {
@@ -48,5 +58,30 @@ pipeline {
                 verifyDeployments: true])
             }
         }
+        }
+      
+        else{
+        stage('Change deployment version') {
+            steps {
+                sh "sed '$IMAGE_VERSION' Deployment.yaml"
+            }
+        }
+
+        stage('Deploy to GKE') {
+            steps{
+                step([
+                $class: 'KubernetesEngineBuilder',
+                projectId: env.PROJECT_ID,
+                clusterName: env.CLUSTER_NAME,
+                location: env.LOCATION,
+                manifestPattern: 'Deployment.yaml',
+                credentialsId: env.CREDENTIALS_ID,
+                verifyDeployments: true])
+            }
+        }
+        }
+        
+        
     }
 }
+
