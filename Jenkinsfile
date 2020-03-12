@@ -10,7 +10,7 @@ node {
             string(defaultValue: 'trial-demo-dev', description: '', name: 'CREDENTIALS_ID'),
             string(defaultValue: 'dedyyyy/trial-demo-dev', description: '', name: 'REGISTRY'),
             string(defaultValue: 'dockerhub', description: '', name: 'DOCKER_CREDENTIAL'),
-            string(defaultValue: '3.0.0', description: '', name: 'IMAGE_VERSION')
+            string(defaultValue: ':3.0.0', description: '', name: 'IMAGE_VERSION')
 
 
             
