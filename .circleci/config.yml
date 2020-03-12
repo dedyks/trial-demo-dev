@@ -3,7 +3,9 @@ orbs:
   node: circleci/node@1.1.6
   gcp-gke: circleci/gcp-gke@0.1.0
   gcr: circleci/gcp-gcr@0.0.2
+  docker: circleci/docker@1.0.0
 jobs:
+  
   build:
     description: Install npm
     # machine option runs your jobs in a dedicated, ephemeral VM that has the following specifications:
@@ -37,7 +39,7 @@ jobs:
       - gcp-gke/init
       # Update a deployment Docker image.
       - gcp-gke/rollout-image:
-          deployment: circle-ci-cluster
+          deployment: nodejs-cluster
           container: dominic-backend
           image: gcr.io/trial-demo-dev/circle-gke:v2 # change version when updating
 workflows:
