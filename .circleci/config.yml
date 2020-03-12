@@ -8,10 +8,7 @@ orbs:
   gcp-cli: circleci/gcp-cli@1.0.0
   kubernetes: circleci/kubernetes@0.11.0
 
-parameters:
-  image-version:
-    type: string
-    default: "v3"
+
 jobs:
   create-update:
     docker:
@@ -39,7 +36,7 @@ jobs:
           deployment: nodejs
           container: app
           image: gcr.io/trial-demo-dev/trial-demo-dev
-          tag: v1.0.3 # change version when updating
+          tag: v2.0.2 # change version when updating
 workflows:
   build_and_deploy_images:
     jobs:
