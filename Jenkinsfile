@@ -15,7 +15,7 @@ pipeline {
     }
     properties(
     [
-        parameters(
+        options(
             [string(defaultValue: 'TRUE', description: 'Build image', name: 'BUILD')]
         )
     ]
