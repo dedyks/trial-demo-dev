@@ -31,6 +31,6 @@ spec:
     spec:
       containers:
       - name: app
-        image: dedyyyy/trial-demo-dev:v3
+        image: gcr.io/trial-demo-dev/trial-demo-dev:v3
         ports:
         - containerPort: 3000
