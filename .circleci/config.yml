@@ -9,7 +9,7 @@ orbs:
   kubernetes: circleci/kubernetes@0.11.0
 
 jobs:
-  create-update:
+  create:
     docker:
       - image: 'cimg/base:stable'
     steps:
@@ -35,7 +35,7 @@ jobs:
           deployment: nodejs
           container: app
           image: gcr.io/trial-demo-dev/trial-demo-dev
-          tag: v2.0.4 # change version when updating
+          tag: v2.0.9 # change version when updating
 workflows:
   build_and_deploy_images:
     jobs:
@@ -44,7 +44,7 @@ workflows:
           requires:
             - gcp-cli/install_and_initialize_cli
           image: trial-demo-dev
-          tag: v1.0.4
+          tag: v2.0.9
       - deploy:
           requires: 
             - gcp-gcr/build-and-push-image
