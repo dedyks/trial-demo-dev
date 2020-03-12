@@ -4,31 +4,68 @@ orbs:
   gcp-gke: circleci/gcp-gke@0.1.0
   gcr: circleci/gcp-gcr@0.0.2
   docker: circleci/docker@1.0.0
+  gcp-gcr: circleci/gcp-gcr@0.6.1
+
+
 jobs:
-  
-  build:
-    description: Install npm
-    # machine option runs your jobs in a dedicated, ephemeral VM that has the following specifications:
-    machine: true
+  build-and-push-image:
+    description: |
+      Install GCP CLI, if needed, and configure. Build and push image to repository.
+    executor: default
+    parameters:
+      dockerfile:
+        default: Dockerfile
+        description: 'Name of dockerfile to use, defaults to Dockerfile'
+        type: string
+      gcloud-service-key:
+        default: GCLOUD_SERVICE_KEY
+        description: The gcloud service key
+        type: env_var_name
+      google-compute-zone:
+        default: GOOGLE_COMPUTE_ZONE
+        description: The Google compute zone to connect with via the gcloud CLI
+        type: env_var_name
+      google-project-id:
+        default: GOOGLE_PROJECT_ID
+        description: The Google project ID to connect with via the gcloud CLI
+        type: env_var_name
+      image:
+        default: trial-demo-dev
+        description: A name for your Docker image
+        type: string
+      path:
+        default: .
+        description: >
+          Path to the directory containing your Dockerfile and build context,
+          defaults to . (working directory)
+        type: string
+      registry-url:
+        default: gcr.io
+        description: 'The GCR registry URL from ['''', us, eu, asia].gcr.io'
+        type: string
+      tag:
+        default: v3
+        description: A Docker image tag
+        type: string
     steps:
       - checkout
-      # Install node
-      - node/install
-      # Install npm
-     
-  Build-Push-Image-Docker:
-    description: Build and push image to Google Container Registry
-    machine: true
-    steps:
-      - checkout
-      - gcr/gcr-auth
-      - gcr/build-image:
-          image: dedyyyy/trial-demo-dev
-          tag: "v3" #Change version number e.g to 'v3' when updating application
-      - gcr/push-image:
-          image: dedyyyy/trial-demo-dev
-          tag: "v3" #Change version number e.g to 'v3' when updating application
-    
+      - gcr-auth:
+          gcloud-service-key: <<parameters.gcloud-service-key>>
+          google-compute-zone: <<parameters.google-compute-zone>>
+          google-project-id: <<parameters.google-project-id>>
+      - build-image:
+          dockerfile: <<parameters.dockerfile>>
+          google-project-id: <<parameters.google-project-id>>
+          image: <<parameters.image>>
+          path: <<parameters.path>>
+          registry-url: <<parameters.registry-url>>
+          tag: <<parameters.tag>>
+      - push-image:
+          google-project-id: <<parameters.google-project-id>>
+          image: <<parameters.image>>
+          registry-url: <<parameters.registry-url>>
+          tag: <<parameters.tag>>
+   
   deploy:
     description: Deploy application to Google Kubernetes Engine
     machine: true
@@ -41,14 +78,11 @@ jobs:
       - gcp-gke/rollout-image:
           deployment: nodejs-cluster
           container: dominic-backend
-          image: gcr.io/trial-demo-dev/circle-gke:v2 # change version when updating
+          image: gcr.io/trial-demo-dev/trial-demo-dev:v3 # change version when updating
 workflows:
   build_update_deploy:
     jobs:
-      - build
-      - Build-Push-Image-Docker:
-          requires:
-            - build
+      - build-and-push-image
       - deploy:
           requires:
             - Build-Push-Image-Docker
