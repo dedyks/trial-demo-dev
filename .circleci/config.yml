@@ -18,8 +18,9 @@ jobs:
       - gcp-gke/init
       # Update a deployment Docker image.
       - gcp-gke/rollout-image:
-          deployment: nodejs-cluster
-          container: dominic-backend
+          cluster: nodeje-cluster
+          deployment: app-deployment
+          container: app
           image: gcr.io/trial-demo-dev/trial-demo-dev:v3 # change version when updating
 workflows:
   build_and_build_images:
@@ -27,3 +28,5 @@ workflows:
       - gcp-gcr/build-and-push-image:
           image: trial-demo-dev    
       - deploy
+          requires: 
+            - gcp-gcr/build-and-push-image
