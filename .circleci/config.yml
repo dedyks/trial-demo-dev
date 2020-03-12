@@ -1,0 +1,56 @@
+version: 2.1
+orbs:
+  node: circleci/node@1.1.6
+  gcp-gke: circleci/gcp-gke@1.0.3
+  gcr: circleci/gcp-gcr@0.0.2
+  docker: circleci/docker@1.0.0
+  gcp-gcr: circleci/gcp-gcr@0.6.1
+  gcp-cli: circleci/gcp-cli@1.0.0
+  kubernetes: circleci/kubernetes@0.11.0
+
+parameters:
+  image-version:
+    type: string
+    default: "v3"
+jobs:
+  create-update:
+    docker:
+      - image: 'cimg/base:stable'
+    steps:
+      - checkout
+      - kubernetes/create-or-update-resource:
+          get-rollout-status: true
+          resource-file-path: Deployment.yaml
+          resource-name: deployment/app-deployment
+          show-kubectl-command: true
+  deploy:
+    description: Deploy application to Google Kubernetes Engine
+    machine: true
+    steps:
+      # Install `gcloud` and `kubectl` if not already installed.
+      # Initialize the `gcloud` CLI.
+      - gcp-gke/install
+      - gcp-gke/update-kubeconfig-with-credentials:
+          cluster: nodejs-cluster
+          perform-login: true
+           # Update a deployment Docker image.
+      - gcp-gke/rollout-image:
+          cluster: nodejs-cluster
+          deployment: app-deployment
+          container: app
+          image: gcr.io/trial-demo-dev/trial-demo-dev
+          tag: v3 # change version when updating
+workflows:
+  build_and_deploy_images:
+    jobs:
+      - gcp-cli/install_and_initialize_cli
+      - gcp-gcr/build-and-push-image:
+          image: trial-demo-dev
+          tag: v3
+      - deploy:
+          requires: 
+            - gcp-gcr/build-and-push-image
+            - gcp-cli/install_and_initialize_cli
+      - create-update:
+          requires:
+            - deploy
