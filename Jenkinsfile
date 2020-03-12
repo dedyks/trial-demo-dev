@@ -1,3 +1,5 @@
+
+
 pipeline {
     agent any
     environment {
@@ -10,6 +12,14 @@ pipeline {
         IMAGE_VERSION =':3.0.0'
     }
     stages {
+        stage('Check image exist') {
+            steps{
+                script {
+                dockerImageExists(registry + env.IMAGE_VERSION)
+                }
+            }
+        }
+        
         stage('Building image') {
             steps{
                 script {
