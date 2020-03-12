@@ -33,6 +33,7 @@ jobs:
 workflows:
   build_and_build_images:
     jobs:
+      - update_deployment_config
       - gcp-cli/install_and_initialize_cli
       - gcp-gcr/build-and-push-image:
           image: trial-demo-dev
