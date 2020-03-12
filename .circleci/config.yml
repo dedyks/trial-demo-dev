@@ -20,8 +20,28 @@ jobs:
           resource-file-path: Deployment.yaml
           resource-name: deployment/nodejs
           show-kubectl-command: true
-  deploy:
-    description: Deploy application to Google Kubernetes Engine
+  build-deploy:
+    description: build new image 
+    machine: true
+    steps:
+      - gcp-cli/install_and_initialize_cli
+      - gcp-gcr/build-and-push-image:
+          image: trial-demo-dev
+          tag: v3.0.3
+      - gcp-gke/install
+      - gcp-gke/update-kubeconfig-with-credentials:
+          cluster: cluster-1
+          perform-login: true
+            # Update a deployment Docker image.
+      - gcp-gke/rollout-image:
+          cluster: cluster-1
+          deployment: nodejs
+          container: app
+          image: gcr.io/trial-demo-dev/trial-demo-dev
+          tag: v3.0.4 # change version when updating
+
+  rollback:
+    description: Deploy application to Google Kubernetes Engine/ rollbacks
     machine: true
     steps:
       # Install `gcloud` and `kubectl` if not already installed.
@@ -36,16 +56,10 @@ jobs:
           deployment: nodejs
           container: app
           image: gcr.io/trial-demo-dev/trial-demo-dev
-          tag: v3.0.3 # change version when updating
+          tag: v3.0.4 # change version when updating
 workflows:
   build_and_deploy_images:
     jobs:
-      pipeline:
-        machine: true
-        steps:
-          - gcp-cli/install_and_initialize_cli
-          - gcp-gcr/build-and-push-image:
-              image: trial-demo-dev
-              tag: v3.0.3
-          - deploy:
-            
+      # - rollback
+      - build-deploy
+      
