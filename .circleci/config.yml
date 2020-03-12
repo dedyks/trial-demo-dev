@@ -25,6 +25,5 @@ workflows:
   build_and_build_images:
     jobs:
       - gcp-gcr/build-and-push-image:
-          context: myContext
           image: trial-demo-dev    
       - deploy
