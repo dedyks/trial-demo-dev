@@ -13,69 +13,56 @@ pipeline {
 
         
     }
-    options(
+    properties(
     [
         parameters(
             [string(defaultValue: 'TRUE', description: 'Build image', name: 'BUILD')]
         )
     ]
     )
-    stages {
         if (BUILD == "TRUE")
         {
         stage('Change deployment version') {
-            steps {
-                sh "sed '$IMAGE_VERSION' Deployment.yaml"
-            }
+            sh "sed '/$VERSION/$IMAGE_VERSION/' Deployment.yaml"
         }   
         stage('Building image') {
-            steps{
-                script {
+            script {
                 dockerImage = docker.build registry + env.IMAGE_VERSION
-                }
             }
         }
         stage('Deploy Image') {
-            steps{    
-                script {
+            script {
                 docker.withRegistry( '', env.DOCKER_CREDENTIAL ) {
                     dockerImage.push()
                     }
                 }
-            }
         }
         stage('Deploy to GKE') {
-            steps{
-                step([
+          [
                 $class: 'KubernetesEngineBuilder',
                 projectId: env.PROJECT_ID,
                 clusterName: env.CLUSTER_NAME,
                 location: env.LOCATION,
                 manifestPattern: 'Deployment.yaml',
                 credentialsId: env.CREDENTIALS_ID,
-                verifyDeployments: true])
-            }
+                verifyDeployments: true]
         }
         }
       
         else{
         stage('Change deployment version') {
-            steps {
-                sh "sed '$IMAGE_VERSION' Deployment.yaml"
-            }
-        }
+            sh "sed '$IMAGE_VERSION' Deployment.yaml"
 
+        }
         stage('Deploy to GKE') {
-            steps{
-                step([
+          [
                 $class: 'KubernetesEngineBuilder',
                 projectId: env.PROJECT_ID,
                 clusterName: env.CLUSTER_NAME,
                 location: env.LOCATION,
                 manifestPattern: 'Deployment.yaml',
                 credentialsId: env.CREDENTIALS_ID,
-                verifyDeployments: true])
-            }
+                verifyDeployments: true]
         }
         }
         
