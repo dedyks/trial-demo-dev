@@ -6,7 +6,11 @@ orbs:
   docker: circleci/docker@1.0.0
   gcp-gcr: circleci/gcp-gcr@0.6.1
   gcp-cli: circleci/gcp-cli@1.0.0
-
+parameters:
+  image-version:
+    type: string
+    default: "v3"
+jobs:
   deploy:
     description: Deploy application to Google Kubernetes Engine
     machine: true
