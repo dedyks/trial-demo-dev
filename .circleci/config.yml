@@ -21,12 +21,14 @@ jobs:
           cluster: nodeje-cluster
           deployment: app-deployment
           container: app
-          image: gcr.io/trial-demo-dev/trial-demo-dev:v3 # change version when updating
+          image: gcr.io/trial-demo-dev/trial-demo-dev
+          tag: v3 # change version when updating
 workflows:
   build_and_build_images:
     jobs:
       - gcp-gcr/build-and-push-image:
-          image: trial-demo-dev    
+          image: trial-demo-dev
+          tag: v3
       - deploy
           requires: 
             - gcp-gcr/build-and-push-image
