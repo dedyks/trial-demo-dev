@@ -14,8 +14,6 @@ jobs:
     machine: true
     steps:
       # Install `gcloud` and `kubectl` if not already installed.
-      - gcp-gke/install
-      - gcp-cli/install_and_initialize_cli
       # Initialize the `gcloud` CLI.
       - gcp-gke/update-kubeconfig-with-credentials:
           cluster: nodejs-cluster
@@ -28,11 +26,17 @@ jobs:
           image: gcr.io/trial-demo-dev/trial-demo-dev
           tag: v3 # change version when updating
 workflows:
+  install_and_configure_cli:
+    jobs:
+      - gcp-cli/install_and_initialize_cli
+      - gcp-gke/install
+
   build_and_build_images:
     jobs:
       - gcp-gcr/build-and-push-image:
           image: trial-demo-dev
           tag: v3
+      
       - deploy:
           requires: 
             - gcp-gcr/build-and-push-image
