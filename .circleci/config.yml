@@ -17,9 +17,8 @@ jobs:
     environment:
       IMAGE_VERSION: << pipeline.parameters.image-version >>
     steps:
-      run:
-        command: |
-          sed 's/VERSION/$IMAGE_VERSION/' Deployment.yaml
+      - sed 's/VERSION/$IMAGE_VERSION/' Deployment.yaml
+
 
   deploy:
     description: Deploy application to Google Kubernetes Engine
