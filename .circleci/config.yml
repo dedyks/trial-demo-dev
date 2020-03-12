@@ -29,6 +29,6 @@ workflows:
       - gcp-gcr/build-and-push-image:
           image: trial-demo-dev
           tag: v3
-      - deploy
+      - deploy:
           requires: 
             - gcp-gcr/build-and-push-image
