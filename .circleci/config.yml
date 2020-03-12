@@ -14,7 +14,11 @@ jobs:
     steps:
       # Install `gcloud` and `kubectl` if not already installed.
       - gcp-gke/install
-      # Update a deployment Docker image.
+      # Initialize the `gcloud` CLI.
+      - gcp-gke/update-kubeconfig-with-credentials:
+          cluster: nodejs-cluster
+          perform-login: true
+           # Update a deployment Docker image.
       - gcp-gke/rollout-image:
           cluster: nodeje-cluster
           deployment: app-deployment
@@ -22,7 +26,7 @@ jobs:
           image: gcr.io/trial-demo-dev/trial-demo-dev
           tag: v3 # change version when updating
 workflows:
-  build_and_deploy_images:
+  build_and_build_images:
     jobs:
       - gcp-gcr/build-and-push-image:
           image: trial-demo-dev
