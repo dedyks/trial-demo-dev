@@ -21,7 +21,7 @@ jobs:
       - kubernetes/create-or-update-resource:
           get-rollout-status: true
           resource-file-path: Deployment.yaml
-          resource-name: deployment/app-deployment
+          resource-name: deployment/nodejs
           show-kubectl-command: true
   deploy:
     description: Deploy application to Google Kubernetes Engine
@@ -31,12 +31,12 @@ jobs:
       # Initialize the `gcloud` CLI.
       - gcp-gke/install
       - gcp-gke/update-kubeconfig-with-credentials:
-          cluster: nodejs-cluster
+          cluster: cluster-1
           perform-login: true
            # Update a deployment Docker image.
       - gcp-gke/rollout-image:
-          cluster: nodejs-cluster
-          deployment: app-deployment
+          cluster: cluster-1
+          deployment: nodejs
           container: app
           image: gcr.io/trial-demo-dev/trial-demo-dev
           tag: v3 # change version when updating

@@ -1,36 +1,20 @@
----
-  apiVersion: v1
-  kind: Service
-  metadata:
-    name: app-service
-  spec:
-    type: LoadBalancer
-    ports:
-    - port: 80
-      targetPort: 3000
-      protocol: TCP
-    selector:
-      app: app
-  
-  
-  apiVersion: apps/v1
-  kind: Deployment
-  metadata:
-    name: app-deployment
-    labels:
-      app: app
-  spec:
-    replicas: 3
-    selector:
-      matchLabels:
-        app: app
-    template:
-      metadata:
-        labels:
-          app: app
-      spec:
-        containers:
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodejs
+  template:
+    metadata:
+      labels:
+        app: nodejs
+    spec:
+      containers:
         - name: app
-          image: gcr.io/trial-demo-dev/trial-demo-dev:v3
+          image: gcr.io/trial-demo-dev/trial-demo-dev:3.0.0
           ports:
-          - containerPort: 3000
+            - containerPort: 3000
+          imagePullPolicy: Always
