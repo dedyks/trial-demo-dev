@@ -5,6 +5,7 @@ orbs:
   gcr: circleci/gcp-gcr@0.0.2
   docker: circleci/docker@1.0.0
   gcp-gcr: circleci/gcp-gcr@0.6.1
+  gcp-cli: circleci/gcp-cli@1.0.0
 
 
 jobs:
@@ -14,6 +15,7 @@ jobs:
     steps:
       # Install `gcloud` and `kubectl` if not already installed.
       - gcp-gke/install
+      - gcp-cli/install_and_initialize_cli
       # Initialize the `gcloud` CLI.
       - gcp-gke/update-kubeconfig-with-credentials:
           cluster: nodejs-cluster
