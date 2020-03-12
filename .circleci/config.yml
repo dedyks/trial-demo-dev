@@ -83,6 +83,4 @@ workflows:
   build_update_deploy:
     jobs:
       - build-and-push-image
-      - deploy:
-          requires:
-            - Build-Push-Image-Docker
+      - deploy
