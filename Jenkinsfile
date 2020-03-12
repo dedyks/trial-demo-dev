@@ -1,29 +1,29 @@
-
-
-pipeline {
-    agent any
-    environment {
-        PROJECT_ID = 'trial-demo-dev'
-        CLUSTER_NAME = 'nodejs-cluster'
-        LOCATION = 'us-central1-a'
-        CREDENTIALS_ID = 'trial-demo-dev'
-        REGISTRY= 'dedyyyy/trial-demo-dev'
-        DOCKER_CREDENTIAL = 'dockerhub'
-        IMAGE_VERSION =':3.0.0'
-
-        
-    }
+node {
+    
     properties(
     [
         parameters(
-            [string(defaultValue: 'TRUE', description: 'Build image', name: 'BUILD')]
+            [
+            string(defaultValue: 'TRUE', description: '', name: 'BUILD'),
+            string(defaultValue: 'trial-demo-dev', description: '', name: 'PROJECT_ID'),
+            string(defaultValue: 'nodejs-cluster', description: '', name: 'CLUSTER_NAME'),
+            string(defaultValue: 'trial-demo-dev', description: '', name: 'CREDENTIALS_ID'),
+            string(defaultValue: 'dedyyyy/trial-demo-dev', description: '', name: 'REGISTRY'),
+            string(defaultValue: 'dockerhub', description: '', name: 'DOCKER_CREDENTIAL'),
+            string(defaultValue: '3.0.0', description: '', name: 'IMAGE_VERSION')
+
+
+            
+            ]
         )
     ]
     )
         if (BUILD == "TRUE")
         {
         stage('Change deployment version') {
-            sh "sed '/$VERSION/$IMAGE_VERSION/' Deployment.yaml"
+            sh "pwd && ls -la"
+            sh "sed 's/VERSION/$IMAGE_VERSION/' Deployment.yaml"
+
         }   
         stage('Building image') {
             script {
@@ -51,9 +51,9 @@ pipeline {
       
         else{
         stage('Change deployment version') {
-            sh "sed '$IMAGE_VERSION' Deployment.yaml"
-
-        }
+            sh "pwd && ls -la"
+            sh "sed 's/VERSION/$IMAGE_VERSION/' Deployment.yaml"
+        }  
         stage('Deploy to GKE') {
           [
                 $class: 'KubernetesEngineBuilder',
@@ -67,6 +67,4 @@ pipeline {
         }
         
         
-    }
 }
-
