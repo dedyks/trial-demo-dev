@@ -12,7 +12,7 @@ pipeline {
         stage('Building image') {
             steps{
                 script {
-                docker.build registry + "3.0.0"
+                docker.build registry + '3.0.0'
                 }
             }
         stage('Deploy to GKE') {
