@@ -17,11 +17,8 @@ pipeline {
     [
         parameters(
             [string(defaultValue: 'TRUE', description: 'Build image', name: 'BUILD')]
-            )
-            
         )
     ]
-    )
     stages {
         if (BUILD == "TRUE")
         {
