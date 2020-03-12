@@ -13,7 +13,7 @@ pipeline {
         stage('Building image') {
             steps{
                 script {
-                docker.build registry + env.IMAGE_VERSION
+                dockerImage = docker.build registry + env.IMAGE_VERSION
                 }
             }
         }
