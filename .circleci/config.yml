@@ -13,8 +13,6 @@ jobs:
       # Install node
       - node/install
       # Install npm
-      - node/install-npm
-      # Download and cache dependencies
      
   Build-Push-Image-Docker:
     description: Build and push image to Google Container Registry
@@ -23,11 +21,11 @@ jobs:
       - checkout
       - gcr/gcr-auth
       - gcr/build-image:
-          image: circle-gke
-          tag: "v2" #Change version number e.g to 'v3' when updating application
+          image: dedyyyy/trial-demo-dev
+          tag: "v3" #Change version number e.g to 'v3' when updating application
       - gcr/push-image:
-          image: circle-gke
-          tag: "v2" #Change version number e.g to 'v3' when updating application
+          image: dedyyyy/trial-demo-dev
+          tag: "v3" #Change version number e.g to 'v3' when updating application
     
   deploy:
     description: Deploy application to Google Kubernetes Engine
