@@ -21,10 +21,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: knote
+  name: nodejs-service
 spec:
   selector:
-    app: knote
+    app: nodejs
   ports:
     - port: 80
     - targetPort: 3000
