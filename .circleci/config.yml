@@ -35,16 +35,16 @@ jobs:
           deployment: nodejs
           container: app
           image: gcr.io/trial-demo-dev/trial-demo-dev
-          tag: v1.0.4 # change version when updating
+          tag: v3.0.4 # change version when updating
 workflows:
   build_and_deploy_images:
     jobs:
-      - gcp-cli/install_and_initialize_cli
-      - gcp-gcr/build-and-push-image:
-          requires:
-            - gcp-cli/install_and_initialize_cli
-          image: trial-demo-dev
-          tag: v1.0.4
-      - deploy:
-          requires: 
-            - gcp-gcr/build-and-push-image
+      # - gcp-cli/install_and_initialize_cli
+      # - gcp-gcr/build-and-push-image:
+      #     requires:
+      #       - gcp-cli/install_and_initialize_cli
+      #     image: trial-demo-dev
+      #     tag: v1.0.4
+      - deploy
+          # requires: 
+          #   - gcp-gcr/build-and-push-image
