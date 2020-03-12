@@ -16,9 +16,9 @@ pipeline {
     properties(
     [
         parameters(
-            [string(defaultValue: 'TRUE', description: 'Build image', name: 'BUILD')
+            [string(defaultValue: 'TRUE', description: 'Build image', name: 'BUILD')]
             )
-            ]
+            
         )
     ]
     )
