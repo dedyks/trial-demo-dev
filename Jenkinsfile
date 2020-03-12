@@ -5,8 +5,8 @@ pipeline {
         CLUSTER_NAME = 'nodejs-cluster'
         LOCATION = 'us-central1-a'
         CREDENTIALS_ID = 'trial-demo-dev'
-        REGISTRY= "dedyyyy/trial-demo-dev"
-        DOCKER_CREDENTIAL = "dockerhub"
+        REGISTRY= 'dedyyyy/trial-demo-dev'
+        DOCKER_CREDENTIAL = 'dockerhub'
     }
     stages {
         stage('Building image') {
