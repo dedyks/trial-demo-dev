@@ -58,8 +58,6 @@ app.get("/", (req, res) => {
     trial_start_date: startDate,
     current_date: endDate,
     cpu_usage: OSUsage,
-
-
   });
 });
 
