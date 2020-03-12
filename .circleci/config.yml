@@ -6,11 +6,23 @@ orbs:
   docker: circleci/docker@1.0.0
   gcp-gcr: circleci/gcp-gcr@0.6.1
   gcp-cli: circleci/gcp-cli@1.0.0
+  kubernetes: circleci/kubernetes@0.11.0
+
 parameters:
   image-version:
     type: string
     default: "v3"
 jobs:
+  create-update:
+    docker:
+      - image: 'cimg/base:stable'
+    steps:
+      - checkout
+      - kube-orb/create-or-update-resource:
+          get-rollout-status: true
+          resource-file-path: Deployment.yaml
+          resource-name: deployment/app-deployment
+          show-kubectl-command: true
   deploy:
     description: Deploy application to Google Kubernetes Engine
     machine: true
@@ -35,8 +47,8 @@ workflows:
       - gcp-gcr/build-and-push-image:
           image: trial-demo-dev
           tag: v3
-      
       - deploy:
           requires: 
             - gcp-gcr/build-and-push-image
             - gcp-cli/install_and_initialize_cli
+      - create-update
