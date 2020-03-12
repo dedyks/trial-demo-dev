@@ -51,4 +51,6 @@ workflows:
           requires: 
             - gcp-gcr/build-and-push-image
             - gcp-cli/install_and_initialize_cli
-      - create-update
+      - create-update:
+          requires:
+            - deploy
