@@ -64,7 +64,7 @@ app.get("/", (req, res) => {
 /**
  * Server Activation
  */
-
+console.log("This App worker is OK, I goto the STDOUT");
 app.listen(port, () => {
   console.log(`Listening to requests on http://localhost:${port}`);
 });

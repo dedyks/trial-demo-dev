@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: gcr.io/trial-demo-dev/trial-demo-dev:v1.5.7
+          image: gcr.io/trial-demo-dev/trial-demo-dev:v3.4.3
           ports:
             - containerPort: 3000
           imagePullPolicy: Always
