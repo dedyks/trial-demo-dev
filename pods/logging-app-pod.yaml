@@ -4,7 +4,7 @@ metadata:
   name: logging-app-pod-sidecar-log-agent-config-map
 data:
   config.toml: |
-    default_api_key = "TIMBER_API_KEY"
+    default_api_key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2FwaS50aW1iZXIuaW8vIiwiZXhwIjpudWxsLCJpYXQiOjE1ODQwNzQyMjYsImlzcyI6Imh0dHBzOi8vYXBpLnRpbWJlci5pby9hcGlfa2V5cyIsInByb3ZpZGVyX2NsYWltcyI6eyJhcGlfa2V5X2lkIjo2ODk0LCJ1c2VyX2lkIjoiYXBpX2tleXw2ODk0In0sInN1YiI6ImFwaV9rZXl8Njg5NCJ9.8MatG0Tk6XQPRv3JcUHT0-m4ibg2l7WF0SvfaqXyga0"
     [[files]]
     path = "/var/log/logging-app/app.log"
 ---
