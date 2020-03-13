@@ -10,7 +10,7 @@ spec:
   template:
     metadata:
       annotations:
-        ad.datadoghq.com/nodejs.logs: '[{"source":"nodejs","service":"nodejs"}]'
+        ad.datadoghq.com/app.logs: '[{"source":"app","service":"nodejs"}]'
       labels:
         app: nodejs
     spec:
