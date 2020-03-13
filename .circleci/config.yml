@@ -44,7 +44,7 @@ workflows:
           requires:
             - gcp-cli/install_and_initialize_cli
           image: trial-demo-dev
-          tag: v3.0.1
+          tag: v1.1.1
       - deploy:
           requires:
             - gcp-gcr/build-and-push-image
