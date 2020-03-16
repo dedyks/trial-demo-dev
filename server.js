@@ -3,27 +3,21 @@
  */
 var os = require('os');
 require('custom-env').env('staging')
-// mongoose-morgan
 var mongooseMorgan = require('mongoose-morgan');
-
-
-var http = require('http');
-const express = require("express");
-const path = require("path");
+var express = require("express");
+var path = require("path");
 /**
  * App Variables
  */
-const app = express();
-const port = process.env.PORT || "3000";
-const OSPlatform = os.platform();
-console.log(OSPlatform);
-const OSRelease = os.release();
-var OSUsage = os.cpus();
+var app = express();
+var port = process.env.PORT || "3000";
+var osPlatform = os.platform();
+console.log(osPlatform);
+var osRelease = os.release();
+var osUsage = os.cpus();
 var name = process.env.APP_CANDIDATE_NAME;
 var title = process.env.APP_TITLE;
-
-
-
+var connectionStringMongo = process.env.APP_MONGO;
 
 var startDate = process.env.APP_CURRENT_DATE;
 var endDate = process.env.APP_TRIAL_START_DATE;
@@ -36,13 +30,12 @@ app.use(require('express-status-monitor')())
 
 // Logger
 app.use(mongooseMorgan({
-  collection: 'access_logger',
-  connectionString: 'mongodb+srv://root:rootpassword@cluster0-wljl0.gcp.mongodb.net/logging?retryWrites=true&w=majority',
- },
- {
- 
- },
- 'combined'
+    collection: 'access_logger',
+    connectionString: connectionStringMongo,
+  }, {
+
+  },
+  'combined'
 ));
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -52,12 +45,12 @@ app.use(express.static(path.join(__dirname, "public")));
 app.get("/", (req, res) => {
   res.render("index", {
     title: title,
-    OSPlatform: OSPlatform,
-    OSRelease: OSRelease,
+    osPlatform: osPlatform,
+    osRelease: osRelease,
     candidate_name: name,
     trial_start_date: startDate,
     current_date: endDate,
-    cpu_usage: OSUsage,
+    cpu_usage: osUsage,
   });
 });
 
