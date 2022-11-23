@@ -20,13 +20,13 @@
   },
   "homepage": "https://github.com/dedyyyy/trial-demo-dev#readme",
   "devDependencies": {
-    "browser-sync": "^2.26.7",
+    "browser-sync": "^2.27.10",
     "nodemon": "^2.0.2"
   },
   "dependencies": {
     "custom-env": "^2.0.1",
     "express": "^4.17.1",
-    "express-status-monitor": "^1.2.9",
+    "express-status-monitor": "^1.3.4",
     "mongoose": "^5.9.4",
     "mongoose-morgan": "^1.0.12",
     "pug": "^2.0.4"
